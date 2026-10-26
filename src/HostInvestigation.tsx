@@ -6,7 +6,9 @@ import './host-detail.css'
 
 // Visual layer follows the existing 主机详情 Figma page (Arco-style): gray-fill inputs, 2px radius,
 // #F2F3F5 table headers, blue-bar section titles. Native elements are used so the styles match 1:1.
-export const navigate = (url: string) => { history.pushState({}, '', url); window.dispatchEvent(new PopStateEvent('popstate')) }
+// App paths are written root-relative ('/hosts/…'); BASE_URL maps them onto a sub-path deploy such as GitHub Pages.
+export const withBase = (url: string) => url.startsWith('/') ? import.meta.env.BASE_URL.replace(/\/$/, '') + url : url
+export const navigate = (url: string) => { history.pushState({}, '', withBase(url)); window.dispatchEvent(new PopStateEvent('popstate')) }
 const fmt = (date?: string) => date ? new Date(date).toLocaleString('zh-CN', { hour12: false }) : '—'
 const clock = (date: string) => new Date(date).toLocaleTimeString('zh-CN', { hour12: false })
 const SEVERITY: Record<Severity, { label: string; tone: string }> = { critical: { label: '严重', tone: 'red' }, high: { label: '高危', tone: 'orange' }, medium: { label: '中危', tone: 'gold' }, low: { label: '低危', tone: 'gray' } }

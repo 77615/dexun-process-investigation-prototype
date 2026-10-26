@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
-import { navigate } from './HostInvestigation'
+import { navigate, withBase } from './HostInvestigation'
 import { forestRows, processKey, capturedAt } from './process-model'
 import { IconButton } from '@astryxdesign/core/IconButton'
 import { HStack } from '@astryxdesign/core/Layout'
@@ -453,13 +453,13 @@ function TopBar({ onHelp }: { onHelp: () => void }) {
         <I d={P.search} /><input className="min-w-0 flex-1 bg-transparent outline-none placeholder:text-text-3" placeholder="搜索主机 / 进程 / 哈希 / IP" />
       </div>
       <button className="flex h-8 cursor-pointer items-center gap-1.5 rounded border border-line px-3 text-[12px] font-semibold">
-        <img src="/assets/robot.png" alt="" className="size-5" />AI COPILOT<span className="grid size-4 place-items-center rounded-full bg-brand-6 text-[10px] text-white">2</span>
+        <img src={withBase("/assets/robot.png")} alt="" className="size-5" />AI COPILOT<span className="grid size-4 place-items-center rounded-full bg-brand-6 text-[10px] text-white">2</span>
       </button>
       <button onClick={onHelp} title="快捷键 (?)" className="grid size-7 cursor-pointer place-items-center rounded-full border border-line text-[12px] text-text-4 hover:border-brand-6 hover:text-brand-6">?</button>
       <I d={P.bell} size={16} className="text-text-4" />
       <div className="flex items-center gap-2">
         <div className="text-right leading-4"><div className="text-[13px] font-semibold">冯国安</div><div className="text-[12px] text-text-3">管理员</div></div>
-        <img src="/assets/avatar.png" alt="" className="size-8 rounded-full" />
+        <img src={withBase("/assets/avatar.png")} alt="" className="size-8 rounded-full" />
       </div>
     </header>
   )
@@ -516,7 +516,7 @@ function Queue({ focusNode, hosts, sel, onPick, statusOf, onVisible }: { focusNo
                   {h.isolated && <span className="host-tag brand">已隔离</span>}
                   {pending > 0 && <span className="host-count" style={top ? { color: SEV[top].fg, background: SEV[top].bg } : undefined} title={`${pending} 个待研判 / 共 ${evs.length} 个事件`}>{pending}</span>}
                 </button>
-                <a href={detailUrl} className="host-detail-btn" aria-label={`打开 ${h.name} 主机详情（进程调查）`} title="主机详情 · 进程调查" onClick={(ev) => { ev.preventDefault(); navigate(detailUrl) }}>
+                <a href={withBase(detailUrl)} className="host-detail-btn" aria-label={`打开 ${h.name} 主机详情（进程调查）`} title="主机详情 · 进程调查" onClick={(ev) => { ev.preventDefault(); navigate(detailUrl) }}>
                   <span>详情</span><I d="m9 6 6 6-6 6" size={12} />
                 </a>
               </div>
@@ -850,7 +850,7 @@ function PlanDrawer({ event, host, node, statusOf, blocked, logs, onClose, onCon
         </div>
         <div className="min-h-0 flex-1 overflow-y-auto px-5 py-4 scroll-thin">
           <div className="flex gap-2.5">
-            <img src="/assets/robot.png" alt="" className="size-8 shrink-0" />
+            <img src={withBase("/assets/robot.png")} alt="" className="size-8 shrink-0" />
             <div className="min-w-0 flex-1">
               <div className="h-5 text-[12px] text-text-4">AI 处置建议</div>
               <p className="mt-1 rounded-lg bg-[#f2f5fa] px-3 py-2.5 leading-[22px]">{event.ai}</p>
@@ -945,7 +945,7 @@ function AiInsight({ event, verdict, onPick, onHover }: { event: HuntEvent; verd
   return (
     <div className="ai-insight scroll-thin border-b border-line bg-[#f7f9fc] px-6 py-3">
       <div className="flex gap-2.5">
-        <img src="/assets/robot.png" alt="" className="size-8 shrink-0" />
+        <img src={withBase("/assets/robot.png")} alt="" className="size-8 shrink-0" />
         <div className="min-w-0 flex-1">
           <div className="flex h-5 items-center gap-2 text-[12px] text-text-3">
             <span className="text-text-4">AI 研判</span><span className="tabular-nums">{lastSeen.slice(0, 5)}</span>
