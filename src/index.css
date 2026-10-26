@@ -1,0 +1,71 @@
+@layer theme, base, components, utilities, astryx;
+@import "tailwindcss";
+@import "@astryxdesign/core/reset.css" layer(base);
+@import "@astryxdesign/core/astryx.css" layer(astryx);
+@font-face { font-family: "Inter:Regular"; src: url("https://static.figma.com/font/Inter_1") format("woff2"); font-weight: 400; font-style: normal; }
+@font-face { font-family: "Inter:Medium"; src: url("https://static.figma.com/font/Inter_1") format("woff2"); font-weight: 500; font-style: normal; }
+@font-face { font-family: "Inter:Bold"; src: url("https://static.figma.com/font/Inter_1") format("woff2"); font-weight: 700; font-style: normal; }
+@font-face { font-family: "JetBrains Mono:Regular"; src: url("https://static.figma.com/font/JetBrainsMono_wght__1") format("woff2"); font-weight: 400; font-style: normal; }
+@font-face { font-family: "JetBrains Mono:Bold"; src: url("https://static.figma.com/font/JetBrainsMono_wght__1") format("woff2"); font-weight: 700; font-style: normal; }
+
+@theme {
+  --font-sans: "Inter:Regular", "PingFang SC", "Noto Sans SC", "Microsoft YaHei", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono:Regular", ui-monospace, monospace;
+  --color-brand-1: #e8f3ff;
+  --color-brand-6: #165dff;
+  --color-red-1: #ffece8;
+  --color-red-6: #f53f3f;
+  --color-text-5: #1d2129;
+  --color-text-4: #4e5969;
+  --color-text-3: #86909c;
+  --color-fill-2: #f7f8fa;
+  --color-line: #e5e6eb;
+}
+
+body { margin: 0; background: #f2f3f5; color: var(--color-text-5); -webkit-font-smoothing: antialiased; }
+.dotbg { background-image: radial-gradient(#dfe3ea 1px, transparent 1px); background-size: 14px 14px; }
+.scroll-thin::-webkit-scrollbar { width: 6px; height: 6px; }
+.scroll-thin::-webkit-scrollbar-thumb { background: #d9dce3; border-radius: 3px; }
+kbd { font-family: var(--font-mono); font-size: 10px; padding: 0 4px; border: 1px solid #d9dce3; border-bottom-width: 2px; border-radius: 4px; background: #fff; color: #4e5969; line-height: 14px; }
+.queue-region{position:relative;min-height:0;display:flex;flex-direction:column;background:white}
+.queue-content{display:flex;flex:1;min-height:0;flex-direction:column}.queue-content[hidden]{display:none}.queue-content>aside{flex:1}.queue-content h2{padding-right:28px}.queue-content aside>div:first-child>div:first-child{padding-right:28px}
+.queue-toggle{position:absolute;right:10px;top:12px;width:28px;height:28px;display:grid;place-items:center;border:1px solid var(--color-line);border-radius:4px;background:white;color:var(--color-text-4);cursor:pointer;z-index:2}
+.queue-toggle:hover{background:var(--color-brand-1);color:var(--color-brand-6)}
+.queue-rail-label{writing-mode:vertical-rl;align-self:center;margin-top:60px;color:var(--color-text-4);letter-spacing:3px}
+.investigation-split{display:flex;flex-direction:column;flex:1;min-height:0;overflow:hidden}
+.split-handle{height:9px;flex:0 0 9px;display:flex;align-items:center;justify-content:center;background:var(--color-fill-2);cursor:row-resize;touch-action:none;user-select:none;border-block:1px solid var(--color-line)}
+.split-handle span{height:3px;width:36px;border-radius:3px;background:#c9cdd4}.split-handle:hover,.split-handle:focus-visible{background:var(--color-brand-1);outline:0}.split-handle:hover span,.split-handle:focus-visible span{background:var(--color-brand-6)}
+
+/* Keep expanded analysis inside the viewport and preserve the evidence workspace. */
+.investigation-main{overflow:hidden;background:white}
+.investigation-main>header,.investigation-main>nav{flex-shrink:0}
+.ai-insight{flex:0 1 auto;min-height:0;max-height:40%;overflow:auto;overscroll-behavior:contain}
+.investigation-main>.investigation-split{flex:1 0 30%}
+/* Queue: host → event hierarchy */
+.host-group{margin-bottom:8px;border:1px solid var(--color-line);border-radius:6px;background:white;overflow:hidden}
+.host-group.is-current{border-color:#bedaff}
+.host-group-head{background:var(--color-fill-2);border-bottom:1px solid var(--color-line)}
+.host-group-toggle{display:flex;width:100%;align-items:center;gap:8px;padding:8px 10px 4px;text-align:left;cursor:pointer}
+.host-status-dot{width:7px;height:7px;flex-shrink:0;border-radius:50%;background:#c9cdd4}.host-status-dot.online{background:#00b42a;box-shadow:0 0 0 3px #e8ffea}
+.host-tag{font-size:11px;padding:0 4px;border-radius:3px;background:#e5e6eb;color:var(--color-text-4)}.host-tag.brand{background:var(--color-brand-1);color:var(--color-brand-6)}
+.host-count{min-width:22px;height:20px;padding:0 6px;border-radius:10px;display:grid;place-items:center;font-size:12px;font-weight:600;background:#e5e6eb;color:var(--color-text-4)}
+.host-detail-btn{display:flex;align-items:center;gap:4px;margin:0 10px 8px 37px;width:fit-content;font-size:12px;color:var(--color-brand-6);padding:2px 8px;border:1px solid #bedaff;border-radius:4px;background:white}
+.host-detail-btn:hover{background:var(--color-brand-1)}
+.host-events{padding:4px 6px 6px}
+.host-event{position:relative;display:block;width:100%;margin-top:2px;padding:7px 10px 7px 14px;border-radius:4px;text-align:left;cursor:pointer}
+.host-event::before{content:"";position:absolute;left:4px;top:9px;bottom:9px;width:3px;border-radius:2px;background:var(--sev)}
+.host-event:hover{background:var(--color-fill-2)}.host-event.active{background:var(--color-brand-1)}
+/* simplified queue cards */
+.host-group-head{position:relative;border-bottom:0}
+.host-group-toggle{padding:8px 34px 8px 10px}
+.host-detail-btn{position:absolute;right:6px;top:50%;transform:translateY(-50%);margin:0;padding:4px;border:0;background:transparent;color:var(--color-text-3);opacity:0;transition:opacity .15s}
+.host-group:hover .host-detail-btn,.host-detail-btn:focus-visible{opacity:1}
+.host-detail-btn:hover{color:var(--color-brand-6);background:var(--color-brand-1)}
+.host-group-head:has(.host-count) .host-group-toggle{padding-right:10px}
+.host-group:hover .host-group-head:has(.host-count) .host-group-toggle{padding-right:34px}
+.host-event{padding:6px 10px 6px 14px}
+.host-event.active::after{content:"";position:absolute;inset:0;border-radius:4px;box-shadow:inset 0 0 0 1px #bedaff;pointer-events:none}
+.host-detail-btn{display:flex;align-items:center;gap:2px;padding:2px 6px 2px 8px;font-size:12px;border:1px solid #bedaff;border-radius:4px;background:white;color:var(--color-brand-6)}
+.host-detail-btn:hover{background:var(--color-brand-6);border-color:var(--color-brand-6);color:white}
+.host-group:hover .host-group-head .host-group-toggle,.host-group-head:focus-within .host-group-toggle{padding-right:64px}
+.host-group-head:focus-within .host-detail-btn{opacity:1}
